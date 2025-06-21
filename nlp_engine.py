@@ -1,10 +1,11 @@
+import torch
 from transformers import pipeline
-import torch # For semantic search tensor operations later
+from sentence_transformers import SentenceTransformer
 
 class NLPEngine:
-    def __init__(self, device=-1): # device: -1 for CPU, 0 for CUDA:0, etc.
+    def __init__(self, device=-1):
         print(f"Initializing NLPEngine on device: {'cuda' if device==0 else 'cpu'}")
-        # Corrected model names from your plan
+
         self.sentiment = pipeline(
             'sentiment-analysis',
             model='distilbert-base-uncased-finetuned-sst-2-english',
@@ -18,7 +19,7 @@ class NLPEngine:
         self.ner = pipeline(
             'ner',
             model='dslim/bert-base-NER',
-            aggregation_strategy='simple', # Good choice!
+            aggregation_strategy='simple',
             device=device
         )
         self.qa = pipeline(
@@ -31,21 +32,19 @@ class NLPEngine:
             model='gpt2-medium',
             device=device
         )
-        # For semantic search, feature-extraction is the correct pipeline.
-        # The model 'sentence-transformers/all-MiniLM-L6-v2' produces embeddings.
         self.retriever = pipeline(
             'feature-extraction',
             model='sentence-transformers/all-MiniLM-L6-v2',
             device=device
         )
+        self.sentence_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+
         print("NLPEngine initialized successfully.")
 
     def analyze_sentiment(self, text):
         return self.sentiment(text)
 
     def summarize_text(self, text, max_length=150, min_length=30):
-        # bart-large-cnn has a max input length of 1024 tokens.
-        # The pipeline handles truncation if the text is too long.
         return self.summarizer(text, max_length=max_length, min_length=min_length, do_sample=False)
 
     def extract_entities(self, text):
@@ -55,29 +54,20 @@ class NLPEngine:
         return self.qa(question=question, context=context)
 
     def generate_text(self, prompt, max_length=50, num_return_sequences=1):
-        # gpt2-medium has a max length of 1024 tokens (prompt + generation)
         return self.generator(prompt, max_length=max_length, num_return_sequences=num_return_sequences)
 
     def get_embeddings(self, text_or_texts):
-        # This pipeline returns a list of embeddings.
-        # For a single string, it's a list containing one embedding.
-        # For a list of strings, it's a list of embeddings.
-        # Each embedding is typically a list of floats (or a tensor).
-        # For sentence-transformers, it usually averages token embeddings to get a sentence embedding.
-        embeddings = self.retriever(text_or_texts)
-        # Ensure embeddings are suitable for cosine similarity (e.g., numpy array or torch tensor)
-        # For sentence-transformers/all-MiniLM-L6-v2, the output is a list containing a single list (the sentence embedding)
-        # if a single sentence is passed. If multiple sentences, it's a list of these.
-        if isinstance(text_or_texts, str):
-             # The output is [[...embedding...]], so take the first element
-            return torch.tensor(embeddings[0])
-        else: # list of texts
-            # return torch.tensor(embeddings).squeeze(1) # Squeeze out the middle dimension if present
-            return torch.stack([torch.tensor(emb) for emb in embeddings])
 
-# Example Usage (for testing Day 1)
+        # embeddings = self.retriever(text_or_texts)
+        # if isinstance(text_or_texts, str):
+        #     return torch.mean(torch.tensor(embeddings[0]), dim=0)
+        # else:
+        #     return torch.stack([torch.mean(torch.tensor(emb), dim=0) for emb in embeddings])
+        return torch.tensor(self.sentence_model.encode(text_or_texts))
+
+# Example Usage
 if __name__ == "__main__":
-    # Determine device
+
     selected_device = 0 if torch.cuda.is_available() else -1
 
     print("Starting NLPEngine tests...")
@@ -114,8 +104,6 @@ if __name__ == "__main__":
     embedding2 = engine.get_embeddings(sample_text_retriever2)
     print(f"\nEmbedding shape for a single sentence: {embedding1.shape}")
 
-    # For semantic search, you'd typically compare this embedding with others using cosine similarity.
-    # Example with two sentences:
     corpus = ["The weather is sunny today.", "I enjoy walking in the park on a beautiful day.", "AI is transforming many industries."]
     query = "What is the forecast for today?"
 
@@ -125,8 +113,6 @@ if __name__ == "__main__":
     print(f"Query embedding shape: {query_embedding.shape}")
     print(f"Corpus embeddings shape: {corpus_embeddings.shape}")
 
-    # Calculate cosine similarities
-    # Ensure query_embedding is 2D for broadcasting with 2D corpus_embeddings
     if query_embedding.ndim == 1:
         query_embedding = query_embedding.unsqueeze(0)
 
