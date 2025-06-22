@@ -32,11 +32,11 @@ class NLPEngine:
             model='gpt2-medium',
             device=device
         )
-        self.retriever = pipeline(
-            'feature-extraction',
-            model='sentence-transformers/all-MiniLM-L6-v2',
-            device=device
-        )
+        # self.retriever = pipeline(
+        #     'feature-extraction',
+        #     model='sentence-transformers/all-MiniLM-L6-v2',
+        #     device=device
+        # )
         self.sentence_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
         print("NLPEngine initialized successfully.")
@@ -98,11 +98,11 @@ if __name__ == "__main__":
     sample_prompt_generate = "In a world powered by AI,"
     print(f"\nGenerated Text from prompt '{sample_prompt_generate}': {engine.generate_text(sample_prompt_generate, max_length=30)}")
 
-    sample_text_retriever1 = "This is a test sentence for semantic search."
-    sample_text_retriever2 = "Another sentence to compare for similarity."
-    embedding1 = engine.get_embeddings(sample_text_retriever1)
-    embedding2 = engine.get_embeddings(sample_text_retriever2)
-    print(f"\nEmbedding shape for a single sentence: {embedding1.shape}")
+    # sample_text_retriever1 = "This is a test sentence for semantic search."
+    # sample_text_retriever2 = "Another sentence to compare for similarity."
+    # embedding1 = engine.get_embeddings(sample_text_retriever1)
+    # embedding2 = engine.get_embeddings(sample_text_retriever2)
+    # print(f"\nEmbedding shape for a single sentence: {embedding1.shape}")
 
     corpus = ["The weather is sunny today.", "I enjoy walking in the park on a beautiful day.", "AI is transforming many industries."]
     query = "What is the forecast for today?"
