@@ -28,7 +28,7 @@ st.set_page_config(
 # Cache the NLP Engine initialization
 @st.cache_resource
 def get_nlp_engine():
-    with st.spinner('Loading NLP models...           This might take a while.'):
+    with st.spinner('Loading NLP models... This might take a while.'):
         return NLPEngine(device=0 if torch.cuda.is_available() else -1)
 
 def main():
@@ -65,7 +65,6 @@ def main():
     """)
     
     st.sidebar.markdown("---")
-    #st.sidebar.info("Created with ❤️ using HuggingFace 🤗 and Streamlit")
     st.sidebar.markdown(
     "Created by [Muhammed Shah](https://muhammedshah.com) with ❤️ using HuggingFace and Streamlit.<br>",
     unsafe_allow_html=True
