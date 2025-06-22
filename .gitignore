@@ -1,1 +1,6 @@
 /hf-env
+
+*.pyc
+__pycache__/
+src/components/__pycache__
+src/utils/__pycache__

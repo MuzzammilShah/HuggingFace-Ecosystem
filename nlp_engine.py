@@ -32,6 +32,7 @@ class NLPEngine:
             model='gpt2-medium',
             device=device
         )
+        ## For initial tests of semantic search
         # self.retriever = pipeline(
         #     'feature-extraction',
         #     model='sentence-transformers/all-MiniLM-L6-v2',
@@ -58,6 +59,8 @@ class NLPEngine:
 
     def get_embeddings(self, text_or_texts):
 
+        ## For initial tests of semantic search
+        ## I tried to manually calculate and adjust the embedding sizes, until i directly used the sentence transformer from HF
         # embeddings = self.retriever(text_or_texts)
         # if isinstance(text_or_texts, str):
         #     return torch.mean(torch.tensor(embeddings[0]), dim=0)
@@ -65,58 +68,61 @@ class NLPEngine:
         #     return torch.stack([torch.mean(torch.tensor(emb), dim=0) for emb in embeddings])
         return torch.tensor(self.sentence_model.encode(text_or_texts))
 
-# Example Usage
 if __name__ == "__main__":
+    pass
 
-    selected_device = 0 if torch.cuda.is_available() else -1
+    # Uncomment all the codes from here if you would like to run this as a stand alone script and test on your terminal how each pipeline works
+    # =================================
 
-    print("Starting NLPEngine tests...")
-    engine = NLPEngine(device=selected_device)
+    # selected_device = 0 if torch.cuda.is_available() else -1
 
-    sample_text_sentiment = "Hugging Face is a great platform for NLP."
-    print(f"\nSentiment for '{sample_text_sentiment}': {engine.analyze_sentiment(sample_text_sentiment)}")
+    # print("Starting NLPEngine tests...")
+    # engine = NLPEngine(device=selected_device)
 
-    sample_text_summarize = """
-    The Hugging Face ecosystem provides a wide array of tools and models for natural language processing.
-    It includes transformers for state-of-the-art models, datasets for accessing and sharing data,
-    and a model hub for discovering and using pre-trained models. Developers can leverage these
-    resources to build powerful NLP applications with relative ease. The platform also supports
-    various tasks such as text classification, summarization, translation, and question answering.
-    The quick brown fox jumps over the lazy dog. This sentence is repeated multiple times to ensure
-    the text is long enough for summarization to be meaningful. The quick brown fox jumps over the lazy dog.
-    The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
-    """
-    print(f"\nSummary: {engine.summarize_text(sample_text_summarize, min_length=20, max_length=50)}")
+    # sample_text_sentiment = "Hugging Face is a great platform for NLP."
+    # print(f"\nSentiment for '{sample_text_sentiment}': {engine.analyze_sentiment(sample_text_sentiment)}")
 
-    sample_text_ner = "Apple Inc. is looking at buying U.K. startup for $1 billion. Tim Cook is the CEO. The meeting is in New York."
-    print(f"\nNER for '{sample_text_ner}': {engine.extract_entities(sample_text_ner)}")
+    # sample_text_summarize = """
+    # The Hugging Face ecosystem provides a wide array of tools and models for natural language processing.
+    # It includes transformers for state-of-the-art models, datasets for accessing and sharing data,
+    # and a model hub for discovering and using pre-trained models. Developers can leverage these
+    # resources to build powerful NLP applications with relative ease. The platform also supports
+    # various tasks such as text classification, summarization, translation, and question answering.
+    # The quick brown fox jumps over the lazy dog. This sentence is repeated multiple times to ensure
+    # the text is long enough for summarization to be meaningful. The quick brown fox jumps over the lazy dog.
+    # The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
+    # """
+    # print(f"\nSummary: {engine.summarize_text(sample_text_summarize, min_length=20, max_length=50)}")
 
-    sample_context_qa = "The capital of France is Paris. It is known for the Eiffel Tower and the Louvre Museum."
-    sample_question_qa = "What is Paris known for?"
-    print(f"\nQA for context '{sample_context_qa}' and question '{sample_question_qa}': {engine.answer_question(question=sample_question_qa, context=sample_context_qa)}")
+    # sample_text_ner = "Apple Inc. is looking at buying U.K. startup for $1 billion. Tim Cook is the CEO. The meeting is in New York."
+    # print(f"\nNER for '{sample_text_ner}': {engine.extract_entities(sample_text_ner)}")
 
-    sample_prompt_generate = "In a world powered by AI,"
-    print(f"\nGenerated Text from prompt '{sample_prompt_generate}': {engine.generate_text(sample_prompt_generate, max_length=30)}")
+    # sample_context_qa = "The capital of France is Paris. It is known for the Eiffel Tower and the Louvre Museum."
+    # sample_question_qa = "What is Paris known for?"
+    # print(f"\nQA for context '{sample_context_qa}' and question '{sample_question_qa}': {engine.answer_question(question=sample_question_qa, context=sample_context_qa)}")
 
-    # sample_text_retriever1 = "This is a test sentence for semantic search."
-    # sample_text_retriever2 = "Another sentence to compare for similarity."
-    # embedding1 = engine.get_embeddings(sample_text_retriever1)
-    # embedding2 = engine.get_embeddings(sample_text_retriever2)
-    # print(f"\nEmbedding shape for a single sentence: {embedding1.shape}")
+    # sample_prompt_generate = "In a world powered by AI,"
+    # print(f"\nGenerated Text from prompt '{sample_prompt_generate}': {engine.generate_text(sample_prompt_generate, max_length=30)}")
 
-    corpus = ["The weather is sunny today.", "I enjoy walking in the park on a beautiful day.", "AI is transforming many industries."]
-    query = "What is the forecast for today?"
+    # # sample_text_retriever1 = "This is a test sentence for semantic search."
+    # # sample_text_retriever2 = "Another sentence to compare for similarity."
+    # # embedding1 = engine.get_embeddings(sample_text_retriever1)
+    # # embedding2 = engine.get_embeddings(sample_text_retriever2)
+    # # print(f"\nEmbedding shape for a single sentence: {embedding1.shape}")
 
-    query_embedding = engine.get_embeddings(query)
-    corpus_embeddings = engine.get_embeddings(corpus)
+    # corpus = ["The weather is sunny today.", "I enjoy walking in the park on a beautiful day.", "AI is transforming many industries."]
+    # query = "What is the forecast for today?"
 
-    print(f"Query embedding shape: {query_embedding.shape}")
-    print(f"Corpus embeddings shape: {corpus_embeddings.shape}")
+    # query_embedding = engine.get_embeddings(query)
+    # corpus_embeddings = engine.get_embeddings(corpus)
 
-    if query_embedding.ndim == 1:
-        query_embedding = query_embedding.unsqueeze(0)
+    # print(f"Query embedding shape: {query_embedding.shape}")
+    # print(f"Corpus embeddings shape: {corpus_embeddings.shape}")
 
-    similarities = torch.nn.functional.cosine_similarity(query_embedding, corpus_embeddings, dim=1)
-    print(f"\nSimilarities between '{query}' and corpus sentences: {similarities.tolist()}")
+    # if query_embedding.ndim == 1:
+    #     query_embedding = query_embedding.unsqueeze(0)
 
-    print("\nNLPEngine tests completed.")
+    # similarities = torch.nn.functional.cosine_similarity(query_embedding, corpus_embeddings, dim=1)
+    # print(f"\nSimilarities between '{query}' and corpus sentences: {similarities.tolist()}")
+
+    # print("\nNLPEngine tests completed.")

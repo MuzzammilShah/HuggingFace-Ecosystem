@@ -1,4 +1,4 @@
-# HuggingFace NLP Playground
+# 🤗 HuggingFace Ecosystem - NLP Playground
 
 A Streamlit-based web application showcasing various NLP capabilities using HuggingFace's Transformers library.
 
@@ -20,61 +20,14 @@ A Streamlit-based web application showcasing various NLP capabilities using Hugg
 - Text Generation: `gpt2-medium`
 - Semantic Search: `sentence-transformers/all-MiniLM-L6-v2`
 
-## Getting Started
+## Demo Snapshots
 
-### Prerequisites
+![Prototype Live example](assets/hf-eco-demo.gif)
 
-- Python 3.7+
-- PyTorch
-- HuggingFace Transformers
-- Streamlit
+> Note: Installation and setup instructions to run this project locally can be found [here](instructions.md)
 
-### Installation
+&nbsp;
 
-1. Clone the repository
-2. Install the dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+## Message from the author
 
-### Running the Application
-
-```
-cd src
-streamlit run app.py
-```
-
-## HuggingFace Spaces Deployment
-
-This application can be deployed to HuggingFace Spaces:
-
-1. Create a new Space on HuggingFace Spaces (https://huggingface.co/spaces)
-2. Choose Streamlit as the SDK
-3. Upload the code to the Space repository
-4. The Space will automatically build and deploy the application
-
-## Project Structure
-
-```
-├── src
-│   ├── app.py                  # Main Streamlit application entry point
-│   ├── nlp_engine.py           # NLP functionality implementation
-│   ├── components              # UI components for each NLP task
-│   │   ├── sentiment_analyzer.py
-│   │   ├── text_summarizer.py
-│   │   ├── entity_extractor.py
-│   │   ├── question_answerer.py
-│   │   ├── text_generator.py
-│   │   └── semantic_search.py
-│   └── utils                   # Utility functions
-│       └── ui_helpers.py       # Common UI elements and formatting
-├── requirements.txt            # Project dependencies
-└── README.md                   # Project documentation
-```
-
-## Notes for Production Deployment
-
-- For production, consider adding model caching or using smaller models
-- Add authentication if exposing sensitive functionality
-- Implement rate limiting for text generation and other resource-intensive tasks
-- Consider adding telemetry and error tracking
+This app is something I've always wanted to make ever since I came across the HF ecosystem 2 years ago, especially the different NLP capabilities that it offers (now there are more, but i wanted to start with this). I hope to introduce more features into this as I learn more in the future. So yeah, I am super proud of how this turned out. Although I'm sure there might be more similar apps such as this. But its been on my mind for a long time and I'm glad its been built now. There's ofcourse room for improvement, I look forward to change and experiment things as I move forward with this.
