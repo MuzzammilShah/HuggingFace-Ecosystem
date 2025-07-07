@@ -1,10 +1,28 @@
-torch==2.7.0+cu128 torchvision==0.22.0+cu128 --extra-index-url https://download.pytorch.org/whl/cu128
-transformers>=4.40
+# WINDOWS
+
+# torch==2.7.0+cu128
+# torchvision==0.22.0+cu128 --extra-index-url https://download.pytorch.org/whl/cu128
+# transformers>=4.40
+# accelerate
+# datasets
+# sentence-transformers
+# streamlit>=1.25.0
+# plotly>=5.15.0
+# pandas>=1.5.0
+# matplotlib>=3.7.0
+# altair>=5.0.0
+
+# MacOS
+
+torch
+torchvision 
+torchaudio
+transformers
 accelerate
 datasets
 sentence-transformers
-streamlit>=1.25.0
-plotly>=5.15.0
-pandas>=1.5.0
-matplotlib>=3.7.0
-altair>=5.0.0
+streamlit
+plotly
+pandas
+matplotlib
+altair

@@ -4,7 +4,8 @@ from sentence_transformers import SentenceTransformer
 
 class NLPEngine:
     def __init__(self, device=-1):
-        print(f"Initializing NLPEngine on device: {'cuda' if device==0 else 'cpu'}")
+        device_name = 'cuda' if device == 0 else 'mps' if device == 'mps' else 'cpu'
+        print(f"Initializing NLPEngine on device: {device_name}")
 
         self.sentiment = pipeline(
             'sentiment-analysis',
@@ -74,7 +75,13 @@ if __name__ == "__main__":
     # Uncomment all the codes from here if you would like to run this as a stand alone script and test on your terminal how each pipeline works
     # =================================
 
-    # selected_device = 0 if torch.cuda.is_available() else -1
+    # # Check for available hardware acceleration
+    # if torch.cuda.is_available():
+    #     selected_device = 0  # CUDA
+    # elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+    #     selected_device = 'mps'  # MPS for Apple Silicon
+    # else:
+    #     selected_device = -1  # CPU
 
     # print("Starting NLPEngine tests...")
     # engine = NLPEngine(device=selected_device)

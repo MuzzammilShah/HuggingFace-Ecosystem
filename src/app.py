@@ -29,7 +29,18 @@ st.set_page_config(
 @st.cache_resource
 def get_nlp_engine():
     with st.spinner('Loading NLP models... This might take a while.'):
-        return NLPEngine(device=0 if torch.cuda.is_available() else -1)
+        # Check for available hardware acceleration
+        if torch.cuda.is_available():
+            st.sidebar.success("CUDA GPU detected! Using GPU acceleration.")
+            device = 0  # CUDA device
+        elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+            st.sidebar.success("Apple MPS detected! Using MPS acceleration.")
+            device = 'mps'  # MPS device
+        else:
+            st.sidebar.info("No GPU detected. Using CPU.")
+            device = -1  # CPU
+        
+        return NLPEngine(device=device)
 
 def main():
     # Initialize NLP Engine
