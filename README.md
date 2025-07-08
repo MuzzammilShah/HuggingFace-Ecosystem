@@ -17,7 +17,7 @@ A Streamlit-based web application showcasing various NLP capabilities using Hugg
 - Text Summarization: `facebook/bart-large-cnn`
 - Named Entity Recognition: `dslim/bert-base-NER`
 - Question Answering: `deepset/roberta-base-squad2`
-- Text Generation: `gpt2-medium`
+- Text Generation: `gpt2`
 - Semantic Search: `sentence-transformers/all-MiniLM-L6-v2`
 
 ## Demo Snapshots
@@ -25,6 +25,10 @@ A Streamlit-based web application showcasing various NLP capabilities using Hugg
 ![Prototype Live example](assets/hf-eco-demo.gif)
 
 > Note: Installation and setup instructions to run this project locally can be found [here](instructions.md)
+
+## Deployed on HuggingFace Spaces
+
+This app is currently deployed as a HuggingFace Space, you can view it [here!](https://huggingface.co/spaces/MuzzammilShah/NLP-Playground) 🚀
 
 &nbsp;
 

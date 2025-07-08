@@ -1,8 +1,8 @@
-## Getting Started
+## Local Development Setup
 
 ### Prerequisites
 
-- Python 3.7+
+- Python 3.9+
 - PyTorch
 - HuggingFace Transformers
 - Streamlit
@@ -10,7 +10,8 @@
 ### Installation
 
 1. Clone the repository
-2. Install the dependencies:
+2. (Optional) Create virtual environment
+3. Install the dependencies:
    ```
    pip install -r requirements.txt
    ```
@@ -28,8 +29,10 @@ This application can be deployed to HuggingFace Spaces:
 
 1. Create a new Space on HuggingFace Spaces (https://huggingface.co/spaces)
 2. Choose Streamlit as the SDK
-3. Upload the code to the Space repository
+3. Upload the code to the Space repository (I personally used the drag-drop method of this one as I didn't really have a complex file system)
 4. The Space will automatically build and deploy the application
+
+> **Additional Resource**: So HuggingFace has updated the way Streamlit applications can be hosted on Spaces - through Docker. [This article](https://shafiqulai.github.io/blogs/blog_4.html?id=4) was the best resource I could get which explained this new process well. Feel free to follow this through.
 
 ## Project Structure
 
@@ -49,10 +52,3 @@ This application can be deployed to HuggingFace Spaces:
 ├── requirements.txt            # Project dependencies
 └── README.md                   # Project documentation
 ```
-
-## Notes for Production Deployment
-
-- For production, consider adding model caching or using smaller models
-- Add authentication if exposing sensitive functionality
-- Implement rate limiting for text generation and other resource-intensive tasks
-- Consider adding telemetry and error tracking
