@@ -5,7 +5,7 @@ def show_text_generator(nlp_engine):
     #st.markdown("✍🏻🪄")
     st.title("Text Generation✍🏻🪄")
     st.markdown("""
-    Generate creative text completions using GPT-2 Medium.
+    Generate creative text completions using GPT-2.
     This model can continue text from a prompt in a coherent and contextually relevant way.
     """)
     
@@ -103,11 +103,11 @@ def show_text_generator(nlp_engine):
     # Information about the model
     with st.expander("About this model"):
         st.markdown("""
-        **Model**: `gpt2-medium`
+        **Model**: `gpt2`
         
-        GPT-2 Medium is an autoregressive language model that uses transformer architecture to generate text.
+        GPT-2 is an autoregressive language model that uses transformer architecture to generate text.
         
-        - **Size**: 355M parameters (medium variant of GPT-2)
+        - **Size**: 124M parameters (This is the smallest version of GPT-2)
         - **Training**: Trained on a diverse dataset of internet text
         - **Capabilities**: Text completion, story generation, question answering (to some extent)
         
