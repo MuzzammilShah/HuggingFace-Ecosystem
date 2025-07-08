@@ -30,7 +30,7 @@ class NLPEngine:
         )
         self.generator = pipeline(
             'text-generation',
-            model='gpt2-medium',
+            model='gpt2',
             device=device
         )
         ## For initial tests of semantic search
